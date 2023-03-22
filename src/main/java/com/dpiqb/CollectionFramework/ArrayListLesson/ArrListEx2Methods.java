@@ -11,7 +11,7 @@ public class ArrListEx2Methods {
         list1.add("Two");
 
         list1.add(0, "Four"); // ********** add(index, value)
-            System.out.println("list1.get(1) = " + list1.get(1)); // ********** get(index)
+        System.out.println("list1.get(1) = " + list1.get(1)); // ********** get(index)
             System.out.println("list1 = " + list1);
         list1.set(1, "New"); // work like replace // ********** set(index, value)
             System.out.println("after set list1 = " + list1);
