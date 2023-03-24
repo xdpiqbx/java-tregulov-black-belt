@@ -1,4 +1,4 @@
-package com.dpiqb.CollectionFramework.NestedClasses;
+package com.dpiqb.NestedClasses;
 
 public class Demo1 {
     static class SomeStaticNestedClass{}

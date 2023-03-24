@@ -1,4 +1,4 @@
-package com.dpiqb.CollectionFramework.NestedClasses.StaticNestedClass;
+package com.dpiqb.NestedClasses.StaticNestedClass;
 
 public class Car {
     String color;

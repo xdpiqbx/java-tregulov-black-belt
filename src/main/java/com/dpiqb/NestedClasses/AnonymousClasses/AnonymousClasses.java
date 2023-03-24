@@ -1,4 +1,4 @@
-package com.dpiqb.CollectionFramework.NestedClasses.AnonymousClasses;
+package com.dpiqb.NestedClasses.AnonymousClasses;
 
 public class AnonymousClasses {
     public static void main(String[] args) {

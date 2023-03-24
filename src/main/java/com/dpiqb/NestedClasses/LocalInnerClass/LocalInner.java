@@ -1,4 +1,4 @@
-package com.dpiqb.CollectionFramework.NestedClasses.LocalInnerClass;
+package com.dpiqb.NestedClasses.LocalInnerClass;
 
 public class LocalInner {
     public static void main(String[] args) {
