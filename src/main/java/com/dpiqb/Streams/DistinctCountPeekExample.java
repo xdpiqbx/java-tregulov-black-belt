@@ -6,24 +6,11 @@ import java.util.stream.Stream;
 
 public class DistinctCountPeekExample {
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        list.add("One");
-        list.add("Two");
-        list.add("Two");
-        list.add("Three");
-        list.add("Four");
-        list.add("Four");
-        list.add("Five");
-        list.add("Six");
-        list.add("Six");
-        list.add("Six");
-        list.add("Seven");
-        list.add("Eight");
-        list.add("Eight");
+        List<Student> students = UtilMockData.getListOfStudents();
 
-        Stream<String> stream = list.stream();
-        // stream.distinct().forEach(System.out::println); // only unic elements
-        // System.out.println("stream.distinct().count() = " + stream.distinct().count()); // 8 unic elements
+        Stream<Student> stream = students.stream();
+        // stream.distinct().forEach(System.out::println);
+        // System.out.println("stream.distinct().count() = " + stream.distinct().count());
         stream.distinct().peek(System.out::println).count();
     }
 }
