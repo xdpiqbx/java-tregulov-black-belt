@@ -109,3 +109,81 @@ public class Demo {
 `volatile boolean flag = true;`
 
 ---
+
+## Data race. Synchronized methods
+
+- Synchronization is on the monitor
+- Default `synchronized` by `this`
+- Synchronization on `this`, `SomeClass.class`, `private static final Object lock = new Object();`
+- Can not Synchronize Constructor
+
+```java
+class DemoRunnable implements Runnable{
+    public synchronized void increment(){ // synchronized
+        Counter.count++;
+    }
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            this.increment(); // potentially Data race here
+        }
+    }
+}
+```
+
+---
+
+## Monitor. Synchronized block
+
+- Every entity in Java has own monitor
+- Monitor can be `busy` or `free`
+- At same time the monitor can work with one thread
+- With Synchronized block you can sync only part of logic
+
+### synchronized block in non-static method
+```java
+    public void increment(){
+        // Some other not synchronized logic
+        synchronized (this){ // I will use lock on `this` obj monitor
+            Counter.count++;
+        }
+        // Some other not synchronized logic
+    }
+```
+### synchronized block in static method
+```java
+    public static synchronized void increment(){
+        synchronized (SomeClass.class){
+            counter++;
+        }
+    }
+```
+
+## wait() notify()
+- `wait([mills, nanos])` - releases the monitor
+- use `wait()` in `while` loop not in `if`
+- Use `synchronized`
+- `Exception in thread "Thread-N" java.lang.IllegalMonitorStateException: current thread is not owner`
+- in `synchronized` method `wait()` `notify()` same as `this.wait()` `this.notify()`
+- in `synchronized block`
+  - you can use `wait()` `notify()` or `this.wait()` `this.notify()`
+  - you can use `static final Object lock = new Object();`
+    - respectively use `lock.wait()` `lock.notify()`
+
+## [Deadlock](./Demo008DeadLock.java)
+- When you try to `synchronized` by few objects do it in the same order
+- At a `deadlock`, the threads wait endlessly, they are not work
+
+## LiveLock
+- At a LiveLock, the threads work endlessly
+ 
+## LockStarvation
+- When lower priority threads are just waiting
+
+## `interface Lock`
+- `void lock()`
+- `void unlock()`
+- `void lockInterruptibly()`
+- `boolean tryLock()` - will lock the thread if it is not locked
+- `boolean tryLock(long time, TimeUnit unit)`
+- `Condition newCondition()`
