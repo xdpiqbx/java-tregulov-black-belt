@@ -1,12 +1,11 @@
 package com.dpiqb.Multithreading;
 
-import java.sql.SQLOutput;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Demo009ATMLock {
     public static void main(String[] args) {
-        Lock lock = new ReentrantLock();
+        Lock lock = new ReentrantLock(); // ********************** ReentrantLock
         new Employee("Bill", lock);
         new Employee("John", lock);
         new Employee("Artem", lock);
@@ -18,7 +17,7 @@ public class Demo009ATMLock {
     }
 }
 
-class Employee extends Thread{
+class Employee extends Thread {
     private String name;
     private Lock lock;
 
@@ -38,13 +37,13 @@ class Employee extends Thread{
             System.out.println(this.name + " is go away. ATM free.");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             this.lock.unlock();
         }
     }
 }
 
-class HurryEmployee extends Thread{
+class HurryEmployee extends Thread {
     private String name;
     private Lock lock;
 
@@ -56,7 +55,7 @@ class HurryEmployee extends Thread{
 
     @Override
     public void run() {
-        if(this.lock.tryLock()) {
+        if (this.lock.tryLock()) {
             System.out.println(this.name + " use ATM");
             try {
                 Thread.sleep(2000L);
@@ -66,7 +65,7 @@ class HurryEmployee extends Thread{
             } finally {
                 this.lock.unlock();
             }
-        }else{
+        } else {
             System.out.println(this.name + " do not want to wait");
         }
     }

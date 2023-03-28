@@ -180,10 +180,32 @@ class DemoRunnable implements Runnable{
 ## LockStarvation
 - When lower priority threads are just waiting
 
-## `interface Lock`
+## [`interface Lock`](./Demo009ATMLock.java)
 - `void lock()`
 - `void unlock()`
 - `void lockInterruptibly()`
 - `boolean tryLock()` - will lock the thread if it is not locked
 - `boolean tryLock(long time, TimeUnit unit)`
 - `Condition newCondition()`
+
+---
+
+## [Daemon Threads](./Demo010DaemonThreads.java)
+- before `.start()` call `.setDaemon(true)`
+```java
+SomeThread thread = new SomeThread();
+thread.setDaemon(true);
+thread.start();
+```
+
+---
+
+## [Interrupt thread](./Demo011Interruption.java)
+- thread.~~stop()~~; - DEPRECATED!
+- use `thread.interrupt();` 
+  - this methos is not interupt thred!
+  - it sets flag `interrupted = true;` and you can use it in you thread
+
+---
+
+## ThreadPool and ExecutorService
