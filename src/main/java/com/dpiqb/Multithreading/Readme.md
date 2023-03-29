@@ -2,7 +2,7 @@
 
 ---
 
-## `class DemoThread extends Thread {...}`
+## [`class DemoThread extends Thread {...}`](./Demo001ExtendsThread.java)
 
 - `class DemoThread extends Thread`
 - `@Override public void run() {...}`
@@ -26,7 +26,7 @@ class DemoThread extends Thread{
 
 ---
 
-## `class DemoRunnable implements Runnable {...}`
+## [`class DemoRunnable implements Runnable {...}`](./Demo002ImplRunnable.java)
 
 - `@FunctionalInterface Runnable {...}` hello lambdas
 - `@Override public void run() {...}`
@@ -50,7 +50,7 @@ class DemoRunnable implements Runnable{
 
 ---
 
-## `Lambdas`
+## [`Lambdas`](./Demo002ImplRunnable.java)
 
 - `@FunctionalInterface Runnable {...}` hello lambdas
 
@@ -77,6 +77,9 @@ public class Demo {
 
 ## Thread methods
 
+### [set and get Name, set get Priority](./Demo003SetGetNamePriority.java)
+### [sleep, set get State, join](./Demo004SleepJoin.java)
+
 - Call from current thread example `Thread.currentThread().getName()`
 - Call from instance example `new Thread().getName()`
 
@@ -102,7 +105,7 @@ public class Demo {
 
 ---
 
-## Volatile
+## [Volatile](./Demo005Volatile.java)
 
 - it is good when only one thread change value all others are read
 
@@ -112,10 +115,20 @@ public class Demo {
 
 ## Data race. Synchronized methods
 
+1. [Example (`synchronized (lock){...}`)](./Demo006Call.java)
+2. [Example (`synchronized` om method)](./Demo006DataRaceSynchronizedMethods.java)
+
 - Synchronization is on the monitor
 - Default `synchronized` by `this`
 - Synchronization on `this`, `SomeClass.class`, `private static final Object lock = new Object();`
 - Can not Synchronize Constructor
+
+### Monitor. Synchronized block
+
+- Every entity in Java has own monitor
+- Monitor can be `busy` or `free`
+- At same time the monitor can work with one thread
+- With Synchronized block you can sync only part of logic
 
 ```java
 class DemoRunnable implements Runnable{
@@ -131,16 +144,8 @@ class DemoRunnable implements Runnable{
 }
 ```
 
----
-
-## Monitor. Synchronized block
-
-- Every entity in Java has own monitor
-- Monitor can be `busy` or `free`
-- At same time the monitor can work with one thread
-- With Synchronized block you can sync only part of logic
-
 ### synchronized block in non-static method
+3. [Example (lock on `this`)](./Demo006SyncBlockMonitor1.java)
 ```java
     public void increment(){
         // Some other not synchronized logic
@@ -151,6 +156,7 @@ class DemoRunnable implements Runnable{
     }
 ```
 ### synchronized block in static method
+4. [Example (`synchronized` in static method)](./Demo006SyncBlockMonitor1.java)
 ```java
     public static synchronized void increment(){
         synchronized (SomeClass.class){
@@ -159,7 +165,7 @@ class DemoRunnable implements Runnable{
     }
 ```
 
-## wait() notify()
+## [`wait()` `notify()`](Demo007WaitNotify.java)
 - `wait([mills, nanos])` - releases the monitor
 - use `wait()` in `while` loop not in `if`
 - Use `synchronized`
@@ -181,6 +187,7 @@ class DemoRunnable implements Runnable{
 - When lower priority threads are just waiting
 
 ## [`interface Lock`](./Demo009ATMLock.java)
+- `Lock lock = new ReentrantLock()`
 - `void lock()`
 - `void unlock()`
 - `void lockInterruptibly()`
@@ -208,4 +215,86 @@ thread.start();
 
 ---
 
-## ThreadPool and ExecutorService
+## ThreadPoolExecutor and Executor
+
+- `public class ThreadPoolExecutor extends AbstractExecutorService { ... }`
+  - `public abstract class AbstractExecutorService implements ExecutorService { ... }`
+    - `public interface ExecutorService extends Executor { ... }`
+
+- `public class Executors { ... }`
+  
+Factory and utility methods for `Executor`, `ExecutorService`, `ScheduledExecutorService`, `ThreadFactory`, and `Callable` classes defined in.
+
+This class supports the following kinds of methods:
+  - Methods that create and return an `ExecutorService` set up with commonly useful configuration settings.
+  - Methods that create and return a `ScheduledExecutorService` set up with commonly useful configuration settings.
+  - Methods that create and return a "wrapped" `ExecutorService`, that disables reconfiguration by making implementation-specific methods inaccessible.
+  - Methods that create and return a `ThreadFactory` that sets newly created threads to a known state.
+  - Methods that create and return a `Callable` out of other closure-like forms, so they can be used in execution methods requiring `Callable`.
+
+1. [Example](./Demo012ThreadPoolExecutorService1.java)
+
+- Executors.newFixedThreadPool(5)
+- Executors.newSingleThreadExecutor();
+
+- threadPoolExecService.execute(new RunnableImpl());
+- threadPoolExecService.shutdown();
+- threadPoolExecService.awaitTermination(1, TimeUnit.SECONDS); - **like a join but with a timer**
+
+2. [Example](./Demo012ThreadPoolExecutorService2.java)
+
+- schedule
+- scheduleAtFixedRate
+- scheduleWithFixedDelay
+
+- Executors.newScheduledThreadPool(1);
+- `schExecService.schedule(new RunnableImpl2(), 3, TimeUnit.SECONDS);`
+  - in this example I scheduled the task after 3 seconds
+- `schExecService.scheduleAtFixedRate(new RunnableImpl2(), 1, 2, TimeUnit.SECONDS);`
+  - (task, the first time it will be started after 1 second, and the task will repeat every 2 seconds without delay, TimeUnit.SECONDS)
+  - if you use `schExecService.shutdown();` immediately after `scheduleAtFixedRate`, `scheduleAtFixedRate` will not start
+- `schExecService.scheduleWithFixedDelay(new RunnableImpl2(), 2, 3, TimeUnit.SECONDS);`
+  - (task, the first time will be started after 2 seconds, and the task will repeat after every 2 seconds, TimeUnit.SECONDS)
+  - if you use `schExecService.shutdown();` immediately after `scheduleWithFixedDelay`, `scheduleWithFixedDelay` will not start
+
+---
+
+## Callable and Future
+
+- `Callable` - `@FunctionalInterface` `public interface Callable<V>{ ... }` a task that returns a result.
+  - `V call() throws Exception;`
+  - You can use `Callable` only with `ExecutorServices`
+
+- `Future` - `public interface Future<V>` represents the result of an asynchronous computation.
+  - `boolean cancel(boolean mayInterruptIfRunning);`
+  - `boolean isCancelled();`
+  - `boolean isDone();`
+  - `V get() throws InterruptedException, ExecutionException;` - will block thread and wait for result
+  - `V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException;`
+
+---
+
+## [Semaphore](./Demo014Semaphore.java)
+
+A counting semaphore. Semaphore maintains a set of permits.
+Each acquire blocks if necessary until a permit is available, and then takes it.
+Each release adds a permit, potentially releasing a blocking acquirer.
+However, no actual permit objects are used;
+Semaphore just keeps a count of the number available and acts accordingly.
+
+- `callBox.acquire();`
+- `callBox.release();`
+
+---
+
+## [CountDownLatch](./Demo015CountDownLatch.java)
+
+- `CountDownLatch countDownLatch = new CountDownLatch(3);`
+- `countDownLatch.countDown();`
+- `countDownLatch.await();`
+
+---
+
+## [Exchanger](./Demo016Exchanger.java)
+- A synchronization point at which threads can pair and swap elements within pairs.
+- `public V exchange(V x) throws InterruptedException { ... }`

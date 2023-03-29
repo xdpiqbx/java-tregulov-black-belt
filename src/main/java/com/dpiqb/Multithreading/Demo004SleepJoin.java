@@ -37,7 +37,7 @@ public class Demo004SleepJoin {
         thread1.start();
         thread2.start();
 
-        thread1.join(); // main thread will wait for thread1
+        thread1.join(); // main thread will wait for thread1 // ************ join
         // thread1.join(2000); // main will wait only for 2 sec
 
         System.out.println("Before .start() thread1 state is -> " + thread1.getState());
