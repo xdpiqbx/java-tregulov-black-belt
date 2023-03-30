@@ -298,3 +298,40 @@ Semaphore just keeps a count of the number available and acts accordingly.
 ## [Exchanger](./Demo016Exchanger.java)
 - A synchronization point at which threads can pair and swap elements within pairs.
 - `public V exchange(V x) throws InterruptedException { ... }`
+
+## [Atomic operations](./Demo017Atomic.java)
+- AtomicInteger
+- AtomicBoolean
+- AtomicLong
+- AtomicIntegerArray
+- ...
+
+## [ConcurrentCollections](./Demo018ConcurrentCollections.java)
+- Collections.synchronized`Collection`();
+- Collections.synchronized`List`();
+- Collections.synchronized`Map`();
+- Collections.synchronized`Set`();
+- Collections.synchronized`NavigableMap`();
+- Collections.synchronized`NavigableSet`();
+- Collections.synchronized`SortedMap`();
+- Collections.synchronized`SortedSet`();
+
+- Be careful with `Concurrent Modification Exception`
+
+## [ConcurrentHashMap](./Demo019ConcurrentHashMap.java)
+- Segment locking (Bucket locking)
+- `HashMap<Integer, String> map = new HashMap<>();` <= Concurrent Modification Exception
+- `ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<>();` <= Ok
+- Be careful with `Concurrent Modification Exception`
+
+## [CopyOnWriteArrayList](./CopyOnWriteArrayList.java)
+- For modification - create copy of list and write to copy.
+- Good for reading
+- Be careful with `Concurrent Modification Exception`
+
+## [ArrayBlockingQueue](./ArrayBlockingQueue.java)
+- FIFO
+- Thread-1 can add to queue (in end)
+- Thread-2 can extract from queue (from begin)
+- `queue.put(i);`
+- `queue.take();`
