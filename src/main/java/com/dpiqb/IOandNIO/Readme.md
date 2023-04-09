@@ -41,3 +41,19 @@ try(FileWriter writer = new FileWriter("src/main/resources/test_001.txt");
 ## [DataOutputStream & DataInputStream](./Demo_005_Data_IO_Stream.java)
 - A data `output` stream lets an application write primitive Java data types to an output stream in a portable way.
 - A data `input` stream lets an application read primitive Java data types from an underlying input stream in a machine-independent way. 
+
+---
+
+## Serialization
+- `implements Serializable` (empty interface)
+- `transient` double salary; (is not serializable)
+- `serialVersionUID`
+- `InvalidClassException` (when `serialVersionUID` in different in )
+
+## [Serialization list of Strings to file](./Demo_006_Serialization_001.java)
+
+## [Deserialization list of Strings from file](./Demo_006_Serialization_002.java)
+
+## [Serialization list of Objects to file](./Demo_006_Serialization_001_1.java)
+
+## [Deserialization list of Objects from file](./Demo_006_Serialization_002_1.java)
