@@ -57,3 +57,7 @@ try(FileWriter writer = new FileWriter("src/main/resources/test_001.txt");
 ## [Serialization list of Objects to file](./Demo_006_Serialization_001_1.java)
 
 ## [Deserialization list of Objects from file](./Demo_006_Serialization_002_1.java)
+
+---
+
+## [RandomAccessFile](./Demo_007_RandomAccessFile.java)
