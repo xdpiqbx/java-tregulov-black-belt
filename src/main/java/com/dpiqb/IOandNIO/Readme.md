@@ -61,3 +61,21 @@ try(FileWriter writer = new FileWriter("src/main/resources/test_001.txt");
 ---
 
 ## [RandomAccessFile](./Demo_007_RandomAccessFile.java)
+
+---
+
+## [File](./Demo_008_File.java)
+
+- `file.getAbsolutePath();`
+- `file.isAbsolute();`
+- `file.isDirectory();`
+- `file.isHidden();`
+- `file.exists();`
+- `file.createNewFile();`
+- `file.mkdir();`
+- `file.length();`
+- `file.delete();`
+- `file.listFiles();`
+- `file.canRead();`
+- `file.canWrite();`
+- `file.canExecute();`
